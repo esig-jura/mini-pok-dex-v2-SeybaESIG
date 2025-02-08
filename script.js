@@ -48,6 +48,9 @@ const pokemons = [
     { name: 'Mewtwo', type: 'Psy', level: 70, img: 'mewtwo.png' }
 ];
 
+// Tableau qui stock les types de Pokémon
+let types = [];
+
 // Sélection de l'élément conteneur des Pokémons
 const container = document.querySelector('.pokemon-container');
 
@@ -59,7 +62,11 @@ function displayPokemons() {
     } else {
         for (let pokemon of pokemons){
             const p = document.createElement("p");
-            p.innerHTML = `${pokemon.name}`;
+            p.innerHTML = `${pokemon.name} `;
+            types = pokemon.type.split(',');
+            for (let type of types) {
+                p.innerHTML += `<small>${type}</small> `;
+            }
             container.appendChild(p)
         }
     }
