@@ -59,7 +59,7 @@ function displayPokemons() {
     } else {
         for (let pokemon of pokemons){
             const p = document.createElement("p");
-            p.innerHTML = `<p>${pokemon.name}</p>`;
+            p.innerHTML = `${pokemon.name}`;
             container.appendChild(p)
         }
     }
