@@ -54,22 +54,50 @@ let types = [];
 // Sélection de l'élément conteneur des Pokémons
 const container = document.querySelector('.pokemon-container');
 
-// Fonction pour afficher les Pokémons
+/**
+ * Fonction pour afficher les Pokémons
+ * @returns {void}
+ */
 function displayPokemons() {
     container.innerHTML = "";
     if (pokemons.length === 0) {
         container.innerHTML = '<p>Dracaufeu a tout brûlé, aucun Pokémon ne correspond à ta recherche !</p>\n';
     } else {
         for (let pokemon of pokemons){
-            const p = document.createElement("p");
+            // ICI
+            /*
             p.innerHTML = `${pokemon.name} `;
             types = pokemon.type.split(',');
             for (let type of types) {
-                p.innerHTML += `<small>${type}</small> `;
-            }
-            container.appendChild(p)
+                p.innerHTML += `<small>${type}</small> `
+                }
+             */
+
+            const div = document.createElement("div");
+            div.innerHTML = generatePokemonCardHTML(pokemon);
+            container.appendChild(div)
         }
     }
 }
 
+function generatePokemonCardHTML(pokemon){
+    let typeToReturn = "";
+    if (pokemon.type.includes(',')) {
+        types = pokemon.type.split(',');
+        typeToReturn = types.join(' / ')
+    }
+    else {
+        typeToReturn = pokemon.type;
+    }
+    return `
+        <div class="pokemon-card">
+            <img src="images/${pokemon.img}" alt="${pokemon.name}">
+            <h2>${pokemon.name}</h2>
+            Type: ${typeToReturn} 
+            Niveau: ${pokemon.level}
+        </div>
+    `;
+}
+
+// Lance la fonction displayPokemons une fois la page chargée
 window.addEventListener('load', displayPokemons);
