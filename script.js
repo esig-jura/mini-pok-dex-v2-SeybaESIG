@@ -85,16 +85,24 @@ function generatePokemonCardHTML(pokemon){
     if (pokemon.type.includes(',')) {
         types = pokemon.type.split(',');
         typeToReturn = types.join(' / ')
-    }
-    else {
-        typeToReturn = pokemon.type;
-    }
-    return `
-        <div class="pokemon-card">
+
+        return `
+        <div class="pokemon-card" style="background: linear-gradient(to right, ${typeColors[types[0]] || DEFAULT_COLOR} 50%, ${typeColors[types[1]] || DEFAULT_COLOR} 50%);">
             <img src="images/${pokemon.img}" alt="${pokemon.name}">
             <h2>${pokemon.name}</h2>
-            Type: ${typeToReturn} 
-            Niveau: ${pokemon.level}
+            <div>Type: ${typeToReturn}</div>
+            <div>Niveau: ${pokemon.level}</div>
+        </div>
+    `;
+    }
+
+    typeToReturn = pokemon.type;
+    return `
+        <div class="pokemon-card" style="background: ${typeColors[pokemon.type] || DEFAULT_COLOR};">
+            <img src="images/${pokemon.img}" alt="${pokemon.name}">
+            <h2>${pokemon.name}</h2>
+            <div>Type: ${typeToReturn}</div>
+            <div>Niveau: ${pokemon.level}</div>
         </div>
     `;
 }
