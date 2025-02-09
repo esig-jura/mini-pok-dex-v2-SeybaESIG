@@ -107,15 +107,26 @@ const barreRecherche = document.getElementById('search-bar');
 // Ajout d'un écouteur d'événement sur la barre de recherche
 barreRecherche.addEventListener('input', filterAndSortPokemons);
 
+// Sélection de l'élément de filtre par type
+const typeFilter = document.getElementById('type-filter');
+
+// Ajout d'un écouteur d'événement sur le filtre par type
+typeFilter.addEventListener('change', filterAndSortPokemons);
+
 /**
- * Fonction pour filtrer les Pokémons par nom
+ * Fonction pour filtrer les Pokémons par nom et type
  * @returns {void}
  */
 function filterAndSortPokemons() {
     container.innerHTML = "";
-    pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(barreRecherche.value.toLowerCase())).forEach(pokemon => {
-        const div = document.createElement("div");
-        div.innerHTML = generatePokemonCardHTML(pokemon);
-        container.appendChild(div)
-    });
+    pokemons
+        .filter(pokemon =>
+            pokemon.name.toLowerCase().includes(barreRecherche.value.toLowerCase()))
+        .filter(pokemon =>
+            pokemon.type.includes(typeFilter.value))
+        .forEach(pokemon => {
+            const div = document.createElement("div");
+            div.innerHTML = generatePokemonCardHTML(pokemon);
+            container.appendChild(div);
+        });
 }
