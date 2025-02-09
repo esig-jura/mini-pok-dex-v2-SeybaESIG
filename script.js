@@ -71,6 +71,11 @@ function displayPokemons() {
     }
 }
 
+/**
+ * Fonction pour générer le code HTML d'une carte Pokémon
+ * @param pokemon
+ * @returns {string}
+ */
 function generatePokemonCardHTML(pokemon){
     let typeToReturn = "";
     if (pokemon.type.includes(',')) {
@@ -103,15 +108,19 @@ window.addEventListener('load', displayPokemons);
 
 // Sélection de l'élément de recherche
 const barreRecherche = document.getElementById('search-bar');
-
 // Ajout d'un écouteur d'événement sur la barre de recherche
 barreRecherche.addEventListener('input', filterAndSortPokemons);
 
+
 // Sélection de l'élément de filtre par type
 const typeFilter = document.getElementById('type-filter');
-
 // Ajout d'un écouteur d'événement sur le filtre par type
 typeFilter.addEventListener('change', filterAndSortPokemons);
+
+// Sélection de l'élément de tri
+const sortOrder = document.getElementById('sort-order');
+// Ajout d'un écouteur d'événement sur le sélecteur de tri
+sortOrder.addEventListener('change', filterAndSortPokemons);
 
 /**
  * Fonction pour filtrer les Pokémons par nom et type
@@ -124,6 +133,18 @@ function filterAndSortPokemons() {
             pokemon.name.toLowerCase().includes(barreRecherche.value.toLowerCase()))
         .filter(pokemon =>
             pokemon.type.includes(typeFilter.value))
+        .sort((a, b) => {
+            if (sortOrder.value === 'name-asc') {
+                return a.name.localeCompare(b.name);
+            } else if (sortOrder.value === 'name-desc') {
+                return b.name.localeCompare(a.name);
+            } else if (sortOrder.value === 'level-asc') {
+                return a.level - b.level;
+            } else if (sortOrder.value === 'level-desc') {
+                return b.level - a.level;
+            }
+            return 0;
+        })
         .forEach(pokemon => {
             const div = document.createElement("div");
             div.innerHTML = generatePokemonCardHTML(pokemon);
