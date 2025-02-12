@@ -60,14 +60,18 @@ const container = document.querySelector('.pokemon-container');
  */
 function displayPokemons() {
     container.innerHTML = "";
-    if (pokemons.length === 0) {
-        container.innerHTML = '<p>Dracaufeu a tout brûlé, aucun Pokémon ne correspond à ta recherche !</p>\n';
-    } else {
-        for (let pokemon of pokemons){
-            const div = document.createElement("div");
-            div.innerHTML = generatePokemonCardHTML(pokemon);
-            container.appendChild(div)
-        }
+    if (pokemons.length < 1) {
+        container.innerHTML =
+            '<p>Dracaufeu a tout brûlé, aucun Pokémon ' +
+            'ne correspond à ta recherche !</p>\n';
+        return;
+    }
+
+
+    for (let pokemon of pokemons) {
+        const div = document.createElement("div");
+        div.innerHTML = generatePokemonCardHTML(pokemon);
+        container.appendChild(div)
     }
 }
 
